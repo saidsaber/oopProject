@@ -21,7 +21,7 @@
 			  	</div>
 			  	<div class="card-body">
 					<p class="login-box-msg">Sign in to start your session</p>
-					<form action="dashboard.html" method="post">
+					<form action="dashboard.php" method="post">
 				  		<div class="input-group mb-3">
 							<input type="email" class="form-control" placeholder="Email">
 							<div class="input-group-append">
@@ -55,7 +55,7 @@
 				  		</div>
 					</form>
 		  			<p class="mb-1 mt-3">
-				  		<a href="forgot-password.html">I forgot my password</a>
+				  		<a href="forgot-password.php">I forgot my password</a>
 					</p>					
 			  	</div>
 			  	<!-- /.card-body -->

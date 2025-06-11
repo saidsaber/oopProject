@@ -2,7 +2,6 @@
 namespace App\Controller;
 session_start();
 require_once(realpath($_SERVER['DOCUMENT_ROOT'] . '/book_store/vendor/autoload.php'));
-// require_once(realpath("C:/xampp/htdocs/book_store/vendor/autoload.php"));
 use App\Traits\Validation;
 use PDO;
 use PDOException;

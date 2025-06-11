@@ -6,6 +6,7 @@ include("App/Config.php");
 $user = UserController::isLogIn($db);
 if (isset($_GET["logout"])) {
   UserController::logout();
+    header("Location: account_details.php"); 
 }
 ?>
 <!DOCTYPE html>
@@ -260,7 +261,7 @@ if (isset($_GET["logout"])) {
             <a class="py-2 px-3 text-black text-decoration-none" href="favourites.php">المفضلة</a>
           </li>
           <li class="profile__tab">
-            <a class="py-2 px-3 text-black text-decoration-none" href="">تسجيل الخروج</a>
+            <a class="py-2 px-3 text-black text-decoration-none" href="?logout">تسجيل الخروج</a>
           </li>
         </ul>
       </div>

@@ -25,7 +25,7 @@
 				</ul>
 				<div class="navbar-nav pl-2">
 					<ol class="breadcrumb p-0 m-0 bg-white">
-						<li class="breadcrumb-item"><a href="orders.html">Orders</a></li>
+						<li class="breadcrumb-item"><a href="orders.php">Orders</a></li>
 						<li class="breadcrumb-item active">Order Detail</li>
 					</ol>
 				</div>
@@ -75,25 +75,25 @@
 							<!-- Add icons to the links using the .nav-icon class
 								with font-awesome or any other icon font library -->
 							<li class="nav-item">
-								<a href="dashboard.html" class="nav-link">
+								<a href="dashboard.php" class="nav-link">
 									<i class="nav-icon fas fa-tachometer-alt"></i>
 									<p>Dashboard</p>
 								</a>																
 							</li>
 							<li class="nav-item">
-								<a href="categories.html" class="nav-link">
+								<a href="categories.php" class="nav-link">
 									<i class="nav-icon fas fa-file-alt"></i>
 									<p>Category</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="subcategory.html" class="nav-link">
+								<a href="subcategory.php" class="nav-link">
 									<i class="nav-icon fas fa-file-alt"></i>
 									<p>Sub Category</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="brands.html" class="nav-link">
+								<a href="brands.php" class="nav-link">
 									<svg class="h-6 nav-icon w-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
 										<path stroke-linecap="round" stroke-linejoin="round" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
 									  </svg>
@@ -101,7 +101,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="products.html" class="nav-link">
+								<a href="products.php" class="nav-link">
 									<i class="nav-icon fas fa-tag"></i>
 									<p>Products</p>
 								</a>
@@ -115,25 +115,25 @@
 								</a>
 							</li>							
 							<li class="nav-item">
-								<a href="orders.html" class="nav-link">
+								<a href="orders.php" class="nav-link">
 									<i class="nav-icon fas fa-shopping-bag"></i>
 									<p>Orders</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="discount.html" class="nav-link">
+								<a href="discount.php" class="nav-link">
 									<i class="nav-icon  fa fa-percent" aria-hidden="true"></i>
 									<p>Discount</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="users.html" class="nav-link">
+								<a href="users.php" class="nav-link">
 									<i class="nav-icon  fas fa-users"></i>
 									<p>Users</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="pages.html" class="nav-link">
+								<a href="pages.php" class="nav-link">
 									<i class="nav-icon  far fa-file-alt"></i>
 									<p>Pages</p>
 								</a>
@@ -154,7 +154,7 @@
 								<h1>Order: #4F3S8J</h1>
 							</div>
 							<div class="col-sm-6 text-right">
-                                <a href="orders.html" class="btn btn-primary">Back</a>
+                                <a href="orders.php" class="btn btn-primary">Back</a>
 							</div>
 						</div>
 					</div>

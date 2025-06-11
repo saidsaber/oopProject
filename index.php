@@ -5,6 +5,7 @@ include("App/controller/UserController.php");
 include("App/Config.php");
 if (isset($_GET["logout"])) {
   UserController::logout();
+  header(header: "Location: index.php"); 
 }
 ?>
 
