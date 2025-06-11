@@ -73,6 +73,47 @@ class UserController
         }
     }
 
+    public static function updateData($db, $name, $email, $id)
+    {
+        unset($_SESSION['error']);
+        $data = [
+            'name' => $name,
+            'email' => $email,
+        ];
+        self::isMin('name', $name);
+        self::isEmail('email', $email);
+        foreach ($data as $key => $value) {
+            self::isRequired($key, $value);
+        }
+        if (self::hasError() == false) {
+            $sql = "UPDATE user SET UserFirstName = '$name' , UserEmail = '$email' WHERE UserId = '$id'";
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            // self::isLogIn($db);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function updatePassword($db, $oldPassword, $password, $id)
+    {
+        unset($_SESSION['error']);
+        $stmt = $db->query("SELECT * FROM user WHERE UserId = '$id'");
+        $rows = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (password_verify($oldPassword, $rows['UserPassword'])) {
+            self::isPassword('password', $password);
+            self::isConfirm("password");
+            if (self::hasError() == false) {
+                $hash = password_hash($password, PASSWORD_DEFAULT);
+                $sql = "UPDATE user SET UserPassword = '$hash' WHERE UserId = '$id'";
+                $stmt = $db->prepare($sql);
+                $stmt->execute();
+                return true;
+            }
+        }
+        return false;
+    }
     public static function login($db, $email, $password)
     {
         $stmt = $db->query("SELECT * FROM user WHERE UserEmail = '$email' ");

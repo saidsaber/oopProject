@@ -11,7 +11,7 @@ trait Validation
         }
     }
 
-    private static function isConfirm($field, $data)
+    private static function isConfirm($field)
     {
         $fieldconfirm = "confirm-" . $field;
         if (!isset($_SESSION["error"][$field])) {
