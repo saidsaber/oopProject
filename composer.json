@@ -1,0 +1,17 @@
+{
+    "name": "said/bookstore",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "said"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
