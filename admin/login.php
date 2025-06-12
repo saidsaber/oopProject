@@ -1,3 +1,14 @@
+<?php
+use App\Controller\Admin\UserController;
+include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/controller/UserController.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/Config.php");
+
+$data = UserController::isLogIn($db);
+if($data){
+	header("Location: dashboard.php");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -21,9 +32,9 @@
 			  	</div>
 			  	<div class="card-body">
 					<p class="login-box-msg">Sign in to start your session</p>
-					<form action="dashboard.php" method="post">
+					<form action="../App/header/admin/user/login.php" method="post">
 				  		<div class="input-group mb-3">
-							<input type="email" class="form-control" placeholder="Email">
+							<input type="email" name="email" class="form-control" placeholder="Email">
 							<div class="input-group-append">
 					  			<div class="input-group-text">
 									<span class="fas fa-envelope"></span>
@@ -31,7 +42,7 @@
 							</div>
 				  		</div>
 				  		<div class="input-group mb-3">
-							<input type="password" class="form-control" placeholder="Password">
+							<input type="password" name="password" class="form-control" placeholder="Password">
 							<div class="input-group-append">
 					  			<div class="input-group-text">
 									<span class="fas fa-lock"></span>

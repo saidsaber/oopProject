@@ -45,7 +45,7 @@ trait Validation
     {
         if (!isset($_SESSION["error"][$field])) {
             if (!preg_match('/^01[0125][0-9]{8}$/', $data)) {
-                return 'Please enter a valid phone number';
+                $_SESSION['error'][$field] = 'Please enter a valid phone number';
             }
         }
         return true;
@@ -57,6 +57,14 @@ trait Validation
             if (!filter_var($data, FILTER_VALIDATE_EMAIL)) {
                 $_SESSION['error'][$field] = 'Please enter a valid email';
             }
+        }
+    }
+
+    public static function gender($field, $data)
+    {
+        $validGenders = ['male', 'female'];
+        if (!in_array(strtolower($data), $validGenders)) {
+            $_SESSION['error'][$field] = 'this field must be "male" or "female"';
         }
     }
 
