@@ -1,9 +1,11 @@
 <?php
-use App\Controller\Admin\UserController;
-include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/controller/UserController.php");
+session_start();
+
+use App\Controller\Admin\AdminController;
+include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/controller/admin/AdminController.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/Config.php");
 
-$data = UserController::isLogIn($db);
+$data = AdminController::isLogIn($db);
 if($data){
 	header("Location: dashboard.php");
 }

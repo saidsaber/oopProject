@@ -1,11 +1,13 @@
 <?php
-use App\Controller\Admin\UserController;
-include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/controller/UserController.php");
+session_start();
+
+use App\Controller\Admin\AdminController;
+include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/controller/admin/AdminController.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/Config.php");
 
-$data = UserController::isLogIn($db);
+$data = AdminController::isLogIn($db);
 if (isset($_GET["logout"])) {
-	UserController::logout();
+	AdminController::logout();
 	header(header: "Location: dashboard.php");
 }
 
@@ -61,7 +63,7 @@ if (isset($_GET["logout"])) {
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-3">
 						<!-- login -->
 						<?php
-						if (UserController::isLogIn($db)) {
+						if (AdminController::isLogIn($db)) {
 							?>
 							<h4 class="h4 mb-0"><strong><?= $data->getAdminName() ?></strong></h4>
 							<div class="mb-3"><?= $data->getAdminEmail() ?></div>
@@ -197,32 +199,34 @@ if (isset($_GET["logout"])) {
 			<!-- Main content -->
 			<section class="content">
 				<!-- Default box -->
-				<div class="container-fluid">
-					<div class="card">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="mb-3">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" class="form-control"
-											placeholder="Name">
+				<form action="../App/header/admin/category/createCategory.php" method="post">
+					<div class="container-fluid">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="mb-3">
+											<label for="name">Name</label>
+											<input type="text" name="name" id="name" class="form-control"
+												placeholder="Name">
+										</div>
 									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="mb-3">
-										<label for="email">Slug</label>
-										<input type="text" name="slug" id="slug" class="form-control"
-											placeholder="Slug">
+									<div class="col-md-6">
+										<div class="mb-3">
+											<label for="email">Slug</label>
+											<input type="text" name="slug" id="slug" class="form-control"
+												placeholder="Slug">
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+						<div class="pb-5 pt-3">
+							<input type="submit" name="submit" value="Create" class="btn btn-primary">
+							<a href="brands.php" class="btn btn-outline-dark ml-3">Cancel</a>
+						</div>
 					</div>
-					<div class="pb-5 pt-3">
-						<button class="btn btn-primary">Create</button>
-						<a href="brands.php" class="btn btn-outline-dark ml-3">Cancel</a>
-					</div>
-				</div>
+				</form>
 				<!-- /.card -->
 			</section>
 			<!-- /.content -->

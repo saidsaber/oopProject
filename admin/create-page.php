@@ -1,11 +1,13 @@
 <?php
-use App\Controller\Admin\UserController;
-include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/controller/UserController.php");
+session_start();
+
+use App\Controller\Admin\AdminController;
+include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/controller/admin/AdminController.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/Config.php");
 
-$data = UserController::isLogIn($db);
+$data = AdminController::isLogIn($db);
 if (isset($_GET["logout"])) {
-	UserController::logout();
+	AdminController::logout();
 	header(header: "Location: dashboard.php");
 }
 
@@ -62,7 +64,7 @@ if (isset($_GET["logout"])) {
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-3">
 						<!-- login -->
 						<?php
-						if (UserController::isLogIn($db)) {
+						if (AdminController::isLogIn($db)) {
 							?>
 							<h4 class="h4 mb-0"><strong><?= $data->getAdminName() ?></strong></h4>
 							<div class="mb-3"><?= $data->getAdminEmail() ?></div>

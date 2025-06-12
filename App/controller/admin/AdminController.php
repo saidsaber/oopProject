@@ -6,7 +6,7 @@ require_once(realpath($_SERVER['DOCUMENT_ROOT'] . '/book_store/vendor/autoload.p
 use App\Traits\Validation;
 use PDO;
 use PDOException;
-class UserController
+class AdminController
 {
     use Validation;
     private $adminId;
@@ -49,7 +49,7 @@ class UserController
         return $this->adminGender;
     }
 
-    public static function createUser($db, $name, $email, $phone, $gender, $password)
+    public static function createAdmin($db, $name, $email, $phone, $gender, $password)
     {
         unset($_SESSION['error']);
         $data = [
@@ -88,6 +88,19 @@ class UserController
         }
     }
 
+    public static function getAllAdmin($db){
+        if (isset($_SESSION['admin']) && !empty($_SESSION['admin']) && $_SESSION['admin'] == 7) {
+            $stmt = $db->query("SELECT * FROM adminuser");
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $users = [];
+            foreach( $rows as $row){
+                $users[] = new self($row["AdminId"], $row["AdminName"], $row["AdminEmail"], $row["AdminPhone"], $row["Gender"]);
+            }
+            return $users;
+        } else {
+            return false;
+        }
+    }
     public static function login($db, $email, $password)
     {
         $stmt = $db->query("SELECT * FROM adminuser WHERE AdminEmail = '$email' ");

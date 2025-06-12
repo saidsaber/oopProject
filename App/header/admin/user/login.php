@@ -1,10 +1,13 @@
 <?php
+session_start();
+
 require_once("../../../Config.php");
-require_once("../../../Controller/UserController.php");
-use App\Controller\Admin\UserController;
+require_once("../../../Controller/admin/AdminController.php");
+use App\Controller\Admin\AdminController;
 
-$data = UserController::login($db, $_POST['email'], $_POST['password']);
-
+$data = AdminController::login($db, $_POST['email'], $_POST['password']);
+// print_r($_SESSION);
+// exit;
 if ($data == false) {
     header("Location: /book_store/admin/login.php");
 } else {
