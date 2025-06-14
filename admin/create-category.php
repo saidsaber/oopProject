@@ -1,4 +1,6 @@
 <?php
+
+use App\Controller\Admin\CategoryController;
 session_start();
 
 use App\Controller\Admin\AdminController;
@@ -199,34 +201,73 @@ if (isset($_GET["logout"])) {
 			<!-- Main content -->
 			<section class="content">
 				<!-- Default box -->
-				<form action="../App/header/admin/category/createCategory.php" method="post">
-					<div class="container-fluid">
-						<div class="card">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-md-6">
-										<div class="mb-3">
-											<label for="name">Name</label>
-											<input type="text" name="name" id="name" class="form-control"
-												placeholder="Name">
+				<?php
+				if (isset($_GET['id']) && !empty($_GET['id'])):
+					$catergory = CategoryController::getCategory($db, $_GET['id']);
+					?>
+					<form action="../App/header/admin/category/updateCategory.php" method="post">
+						<input type="hidden" name="id" value="<?= $catergory->getCateId() ?>">
+						<div class="container-fluid">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="name">Name</label>
+												<input type="text" name="name" value="<?= $catergory->getCateName() ?>"
+													id="name" class="form-control" placeholder="Name">
+											</div>
 										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="mb-3">
-											<label for="email">Slug</label>
-											<input type="text" name="slug" id="slug" class="form-control"
-												placeholder="Slug">
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="email">Slug</label>
+												<input type="text" name="slug" value="<?= $catergory->getCateSlug() ?>"
+													id="slug" class="form-control" placeholder="Slug">
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+							<div class="pb-5 pt-3">
+								<input type="submit" name="submit" value="Update" class="btn btn-primary">
+								<a href="brands.php" class="btn btn-outline-dark ml-3">Cancel</a>
+							</div>
 						</div>
-						<div class="pb-5 pt-3">
-							<input type="submit" name="submit" value="Create" class="btn btn-primary">
-							<a href="brands.php" class="btn btn-outline-dark ml-3">Cancel</a>
+					</form>
+				<?php else: ?>
+					<form action="../App/header/admin/category/createCategory.php" method="post">
+						<div class="container-fluid">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="name">Name</label>
+												<input type="text" name="name" id="name"
+													value="<?= CategoryController::getOldData('name') ?>"
+													class="form-control" placeholder="Name">
+											</div>
+											<p style="color : #dc3545"><?= CategoryController::showError('name') ?></p>
+										</div>
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="email">Slug</label>
+												<input type="text" name="slug" id="slug" value="<?= CategoryController::getOldData('slug')?>" class="form-control"
+													placeholder="Slug">
+											</div>
+											<p style="color : #dc3545"><?= CategoryController::showError('slug') ?></p>
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="pb-5 pt-3">
+								<input type="submit" name="submit" value="Create" class="btn btn-primary">
+								<a href="brands.php" class="btn btn-outline-dark ml-3">Cancel</a>
+							</div>
 						</div>
-					</div>
-				</form>
+					</form>
+				<?php endif ?>
 				<!-- /.card -->
 			</section>
 			<!-- /.content -->

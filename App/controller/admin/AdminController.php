@@ -103,14 +103,27 @@ class AdminController
     }
     public static function login($db, $email, $password)
     {
-        $stmt = $db->query("SELECT * FROM adminuser WHERE AdminEmail = '$email' ");
-        $rows = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (password_verify($password, $rows['Password'])) {
-            $_SESSION['admin'] = $rows['AdminId'];
-            return new self($rows['AdminId'], $rows['AdminName'], $rows['AdminEmail'], $rows['AdminPhone'], $rows['Gender']);
-        } else {
-            return false;
+        unset($_SESSION['error']);
+        $data = [
+            'email' => $email,
+            'password' => $password
+        ];
+        self::isPassword('password', $password);
+        self::isEmail('email', $email);
+        foreach ($data as $key => $value) {
+            self::isRequired($key, $value);
         }
+        if(!self::hasError()){
+            $stmt = $db->query("SELECT * FROM adminuser WHERE AdminEmail = '$email' ");
+            $rows = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (password_verify($password, $rows['Password'])) {
+                $_SESSION['admin'] = $rows['AdminId'];
+                return new self($rows['AdminId'], $rows['AdminName'], $rows['AdminEmail'], $rows['AdminPhone'], $rows['Gender']);
+            }else{
+                $_SESSION['error']['login'] = "Invalid email or password";
+            }
+        }
+        return false;
     }
     public static function logout()
     {

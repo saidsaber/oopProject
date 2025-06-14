@@ -9,6 +9,8 @@ trait Validation
                 $_SESSION['error'][$field] = "must be more than 4";
             }
         }
+        $_SESSION['data'][$field] = $data;
+
     }
 
     private static function isConfirm($field)
@@ -28,6 +30,7 @@ trait Validation
                 $_SESSION["error"][$field] = "$field is required";
             }
         }
+        $_SESSION['data'][$field] = $data;
 
     }
 
@@ -38,6 +41,8 @@ trait Validation
                 $_SESSION["error"][$field] = 'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.';
             }
         }
+        $_SESSION['data'][$field] = $data;
+
     }
 
 
@@ -48,7 +53,7 @@ trait Validation
                 $_SESSION['error'][$field] = 'Please enter a valid phone number';
             }
         }
-        return true;
+        $_SESSION['data'][$field] = $data;
     }
 
     private static function isEmail($field, $data)
@@ -58,6 +63,8 @@ trait Validation
                 $_SESSION['error'][$field] = 'Please enter a valid email';
             }
         }
+        $_SESSION['data'][$field] = $data;
+
     }
 
     public static function gender($field, $data)
@@ -66,9 +73,29 @@ trait Validation
         if (!in_array(strtolower($data), $validGenders)) {
             $_SESSION['error'][$field] = 'this field must be "male" or "female"';
         }
+        $_SESSION['data'][$field] = $data;
     }
 
-    private static function hasError()
+    public static function showError($field)
+    {
+        if (isset($_SESSION['error'][$field]) && !empty($_SESSION['error'][$field])) {
+            $error = $_SESSION['error'][$field];
+            unset($_SESSION['error'][$field]);
+            return $error;
+        }
+        return null;
+    }
+
+    public static function getOldData($field)
+    {
+        if (isset($_SESSION['data'][$field]) && !empty($_SESSION['data'][$field])) {
+            $data = $_SESSION['data'][$field];
+            unset($_SESSION['data'][$field]);
+            return $data;
+        }
+        return null;
+    }
+    public static function hasError()
     {
         return (isset($_SESSION["error"]) && !empty($_SESSION["error"])) ? true : false;
     }

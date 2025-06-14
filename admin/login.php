@@ -10,6 +10,7 @@ if($data){
 	header("Location: dashboard.php");
 }
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,23 +35,26 @@ if($data){
 			  	</div>
 			  	<div class="card-body">
 					<p class="login-box-msg">Sign in to start your session</p>
+					<p class="login-box-msg" style="color : #dc3545"><?= AdminController::showError('login')?></p>
 					<form action="../App/header/admin/user/login.php" method="post">
 				  		<div class="input-group mb-3">
-							<input type="email" name="email" class="form-control" placeholder="Email">
+							<input type="text" name="email" class="form-control" value="<?= AdminController::getOldData('email')?>" placeholder="Email">
 							<div class="input-group-append">
 					  			<div class="input-group-text">
 									<span class="fas fa-envelope"></span>
 					  			</div>
 							</div>
-				  		</div>
+						</div>
+						<p style="color : #dc3545"><?= AdminController::showError('email')?></p>
 				  		<div class="input-group mb-3">
-							<input type="password" name="password" class="form-control" placeholder="Password">
+							<input type="password" name="password" class="form-control" value="<?= AdminController::getOldData('password')?>" placeholder="Password">
 							<div class="input-group-append">
 					  			<div class="input-group-text">
 									<span class="fas fa-lock"></span>
 					  			</div>
 							</div>
 				  		</div>
+						<p style="color: #dc3545"><?= AdminController::showError('password')?></p>
 				  		<div class="row">
 							<!-- <div class="col-8">
 					  			<div class="icheck-primary">

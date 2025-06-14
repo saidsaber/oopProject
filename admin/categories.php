@@ -8,7 +8,11 @@ include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/Config.php");
 $data = AdminController::isLogIn($db);
 if (isset($_GET["logout"])) {
 	AdminController::logout();
-	header(header: "Location: dashboard.php");
+	header(header: "Location: categories.php");
+}
+if (isset($_GET["delete"])) {
+	CategoryController::deleteCategory($db, $_GET['delete']);
+	header(header: "Location: categories.php");
 }
 
 ?>
@@ -233,7 +237,7 @@ if (isset($_GET["logout"])) {
 										<td><?= $category->getCateSlug()?></td>
 
 										<td>
-											<a href="#">
+											<a href="create-category.php?id=<?= $category->getCateId()?>">
 												<svg class="filament-link-icon w-4 h-4 mr-1"
 													xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
 													fill="currentColor" aria-hidden="true">
@@ -242,7 +246,7 @@ if (isset($_GET["logout"])) {
 													</path>
 												</svg>
 											</a>
-											<a href="#" class="text-danger w-4 h-4 mr-1">
+											<a href="?delete=<?= $category->getCateId()?>" class="text-danger w-4 h-4 mr-1">
 												<svg wire:loading.remove.delay="" wire:target=""
 													class="filament-link-icon w-4 h-4 mr-1"
 													xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
