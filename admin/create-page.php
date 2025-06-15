@@ -2,6 +2,7 @@
 session_start();
 
 use App\Controller\Admin\AdminController;
+use App\Controller\Admin\PagesController;
 include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/controller/admin/AdminController.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/Config.php");
 
@@ -200,39 +201,95 @@ if (isset($_GET["logout"])) {
 			<!-- Main content -->
 			<section class="content">
 				<!-- Default box -->
-				<div class="container-fluid">
-					<div class="card">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="mb-3">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" class="form-control"
-											placeholder="Name">
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="mb-3">
-										<label for="email">Slug</label>
-										<input type="text" name="slug" id="slug" class="form-control"
-											placeholder="Slug">
-									</div>
-								</div>
-								<div class="col-md-12">
-									<div class="mb-3">
-										<label for="content">Content</label>
-										<textarea name="content" id="content" class="summernote" cols="30"
-											rows="10"></textarea>
+				<?php
+				if (isset($_GET['id']) && !empty($_GET['id'])):
+					$page = PagesController::getPage($db , $_GET['id']);
+					?>
+					<form action="../App/header/admin/pages/updatePage.php" method="post">
+						<input type="hidden" name="id" value="<?= $page->getId()?>">
+						<div class="container-fluid">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="name">Name</label>
+												<input type="text" name="name" id="name"
+													value="<?= $page->getName()?>" class="form-control"
+													placeholder="Name">
+											</div>
+											<p style="color : #dc3545"><?= PagesController::showError('name') ?></p>
+
+										</div>
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="slug">Slug</label>
+												<input type="text" name="slug" id="slug"
+													value="<?= $page->getSlug()?>" class="form-control"
+													placeholder="Slug">
+											</div>
+											<p style="color : #dc3545"><?= PagesController::showError('slug') ?></p>
+										</div>
+										<div class="col-md-12">
+											<div class="mb-3">
+												<label for="content">Content</label>
+												<textarea name="content" id="content" class="summernote" cols="30"
+													rows="10"><?= $page->getContent()?></textarea>
+											</div>
+											<p style="color : #dc3545"><?= PagesController::showError('content') ?></p>
+										</div>
 									</div>
 								</div>
 							</div>
+							<div class="pb-5 pt-3">
+								<input type="submit" class="btn btn-primary" value="Update">
+								<a href="pages.php" class="btn btn-outline-dark ml-3">Cancel</a>
+							</div>
 						</div>
-					</div>
-					<div class="pb-5 pt-3">
-						<button class="btn btn-primary">Create</button>
-						<a href="pages.php" class="btn btn-outline-dark ml-3">Cancel</a>
-					</div>
-				</div>
+					</form>
+				<?php else: ?>
+					<form action="../App/header/admin/pages/createPage.php" method="post">
+						<div class="container-fluid">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="name">Name</label>
+												<input type="text" name="name" id="name"
+													value="<?= PagesController::getOldData('name') ?>" class="form-control"
+													placeholder="Name">
+											</div>
+											<p style="color : #dc3545"><?= PagesController::showError('name') ?></p>
+
+										</div>
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="slug">Slug</label>
+												<input type="text" name="slug" id="slug"
+													value="<?= PagesController::getOldData('slug') ?>" class="form-control"
+													placeholder="Slug">
+											</div>
+											<p style="color : #dc3545"><?= PagesController::showError('slug') ?></p>
+										</div>
+										<div class="col-md-12">
+											<div class="mb-3">
+												<label for="content">Content</label>
+												<textarea name="content" id="content" class="summernote" cols="30"
+													rows="10"><?= PagesController::getOldData('content') ?></textarea>
+											</div>
+											<p style="color : #dc3545"><?= PagesController::showError('content') ?></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="pb-5 pt-3">
+								<input type="submit" class="btn btn-primary" value="Create">
+								<a href="pages.php" class="btn btn-outline-dark ml-3">Cancel</a>
+							</div>
+						</div>
+					</form>
+				<?php endif; ?>
 				<!-- /.card -->
 			</section>
 			<!-- /.content -->
