@@ -44,7 +44,11 @@ class CategoryController
             foreach ($rows as $row) {
                 $categories[] = new self($row["CateId"], $row["CateName"], $row["Slug"]);
             }
-            return $categories;
+            if(count($categories) > 0) {
+                return $categories;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

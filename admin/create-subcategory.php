@@ -1,7 +1,10 @@
 <?php
+
+use App\Controller\Admin\SubCategoryController;
 session_start();
 
 use App\Controller\Admin\AdminController;
+use App\Controller\Admin\CategoryController;
 include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/controller/admin/AdminController.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/Config.php");
 
@@ -199,41 +202,116 @@ if (isset($_GET["logout"])) {
 			<!-- Main content -->
 			<section class="content">
 				<!-- Default box -->
-				<div class="container-fluid">
-					<div class="card">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-md-12">
-									<div class="mb-3">
-										<label for="name">Category</label>
-										<select name="category" id="category" class="form-control">
-											<option value="">Electronics</option>
-											<option value="">Mobile</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="mb-3">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" class="form-control"
-											placeholder="Name">
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="mb-3">
-										<label for="email">Slug</label>
-										<input type="text" name="slug" id="slug" class="form-control"
-											placeholder="Slug">
+				<?php
+				if (isset($_GET['id']) && !empty($_GET['id'])):
+					$subcategory = SubCategoryController::getSubCategory($db, $_GET['id']);
+					?>
+					<form action="../App/header/admin/SubCategory/updateSubCategory.php" method="post">
+						<input type="hidden" name="id" value="<?= $subcategory->getSubCateId() ?>">
+						<div class="container-fluid">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="mb-3">
+												<label for="name">Category</label>
+												<?php
+												$categories = CategoryController::getAllCategories($db);
+												if ($categories):
+													?>
+													<select name="category" id="category" class="form-control">
+														<option value="0"></option>
+														<?php
+														foreach ($categories as $category):
+															?>
+															<option value="<?= $category->getCateId() ?>"
+																<?= ($subcategory->getCateId() === $category->getCateId()) ? 'selected' : '' ?>>
+																<?= $category->getCateName() ?>
+															</option>
+														<?php endforeach; ?>
+													</select>
+
+												<?php else: ?>
+													<p>undefin categories</p>
+												<?php endif; ?>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="name">Name</label>
+												<input type="text" name="name" id="name" class="form-control"
+													value="<?= $subcategory->getSubCateName() ?>" placeholder="Name">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="email">Slug</label>
+												<input type="text" name="slug" id="slug" class="form-control"
+													value="<?= $subcategory->getSubCateSlug() ?>" placeholder="Slug">
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
+							<div class="pb-5 pt-3">
+								<input type="submit" name="submit" value="Update" class="btn btn-primary">
+								<a href="subcategory.php" class="btn btn-outline-dark ml-3">Cancel</a>
+							</div>
 						</div>
-					</div>
-					<div class="pb-5 pt-3">
-						<button class="btn btn-primary">Create</button>
-						<a href="subcategory.php" class="btn btn-outline-dark ml-3">Cancel</a>
-					</div>
-				</div>
+					</form>
+				<?php else: ?>
+					<form action="../App/header/admin/SubCategory/createSubCategory.php" method="post">
+						<div class="container-fluid">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="mb-3">
+												<label for="name">Category</label>
+												<?php
+												$categories = CategoryController::getAllCategories($db);
+												if ($categories):
+													?>
+													<select name="category" id="category" class="form-control">
+														<option value="0"></option>
+														<?php
+														foreach ($categories as $category):
+															?>
+															<option value="<?= $category->getCateId() ?>">
+																<?= $category->getCateName() ?>
+															</option>
+														<?php endforeach; ?>
+													</select>
+
+												<?php else: ?>
+													<p>undefin categories</p>
+												<?php endif; ?>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="name">Name</label>
+												<input type="text" name="name" id="name" class="form-control"
+													placeholder="Name">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="email">Slug</label>
+												<input type="text" name="slug" id="slug" class="form-control"
+													placeholder="Slug">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="pb-5 pt-3">
+								<input type="submit" name="submit" value="Create" class="btn btn-primary">
+								<a href="subcategory.php" class="btn btn-outline-dark ml-3">Cancel</a>
+							</div>
+						</div>
+					</form>
+				<?php endif; ?>
 				<!-- /.card -->
 			</section>
 			<!-- /.content -->
