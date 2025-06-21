@@ -6,7 +6,7 @@ include("App/Config.php");
 $user = UserController::isLogIn($db);
 if (isset($_GET["logout"])) {
   UserController::logout();
-    header("Location: account_details.php"); 
+  header("Location: account_details.php");
 }
 ?>
 <!DOCTYPE html>
@@ -81,6 +81,28 @@ if (isset($_GET["logout"])) {
                   <li class="nav__link nav__user-link"><a href="?logout">تسجيل الخروج</a></li>
                 </ul>
               </li>
+              <li class="nav__link">
+                <a class="d-flex align-items-center gap-2" href="favourites.php">
+                  المفضلة
+                  <div class="position-relative">
+                    <i class="fa-regular fa-heart"></i>
+                    <div class="nav__link-floating-icon">
+                      0
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav__link">
+                <a class="d-flex align-items-center gap-2" data-bs-toggle="offcanvas" data-bs-target="#nav__cart">
+                  عربة التسوق
+                  <div class="position-relative">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <div class="nav__link-floating-icon">
+                      0
+                    </div>
+                  </div>
+                </a>
+              </li>
               <?php
             } else {
               ?>
@@ -91,24 +113,7 @@ if (isset($_GET["logout"])) {
                 </a>
               </li>
             <?php } ?>
-            <li class="nav__link">
-              <a class="d-flex align-items-center gap-2" href="favourites.php">
-                المفضلة
-                <div class="position-relative">
-                  <i class="fa-regular fa-heart"></i>
-                  <div class="nav__link-floating-icon">0</div>
-                </div>
-              </a>
-            </li>
-            <li class="nav__link">
-              <a class="d-flex align-items-center gap-2" data-bs-toggle="offcanvas" data-bs-target="#nav__cart">
-                عربة التسوق
-                <div class="position-relative">
-                  <i class="fa-solid fa-cart-shopping"></i>
-                  <div class="nav__link-floating-icon">0</div>
-                </div>
-              </a>
-            </li>
+
           </ul>
         </div>
         <div class="nav-mobile fixed-bottom d-block d-lg-none">
@@ -274,14 +279,14 @@ if (isset($_GET["logout"])) {
                 <label class="fw-bold mb-2" for="first-name">
                   الاسم الاول <span class="required">*</span>
                 </label>
-                <input type="text" name="name" class="form__input" id="first-name" value="<?= $user->getName()?>" />
+                <input type="text" name="name" class="form__input" id="first-name" value="<?= $user->getName() ?>" />
               </div>
             </div>
             <div class="w-100 mb-3">
-              <label class="fw-bold mb-2" for="email" >
+              <label class="fw-bold mb-2" for="email">
                 البريد الالكتروني<span class="required">*</span>
               </label>
-              <input type="text" name="email" class="form__input" id="email" value="<?= $user->getEmail()?>"/>
+              <input type="text" name="email" class="form__input" id="email" value="<?= $user->getEmail() ?>" />
             </div>
             <input class="primary-button" type="submit" value="تعديل" name="update">
           </form>

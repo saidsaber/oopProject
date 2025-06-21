@@ -145,13 +145,6 @@ if (isset($_GET["delete"])) {
 						</li>
 
 						<li class="nav-item">
-							<a href="#" class="nav-link">
-								<!-- <i class="nav-icon fas fa-tag"></i> -->
-								<i class="fas fa-truck nav-icon"></i>
-								<p>Shipping</p>
-							</a>
-						</li>
-						<li class="nav-item">
 							<a href="orders.php" class="nav-link">
 								<i class="nav-icon fas fa-shopping-bag"></i>
 								<p>Orders</p>
@@ -217,6 +210,10 @@ if (isset($_GET["delete"])) {
 							</div>
 						</div>
 						<div class="card-body table-responsive p-0">
+							<?php
+							$categories = CategoryController::getAllCategories($db);
+							if($categories):
+							?>
 							<table class="table table-hover text-nowrap">
 								<thead>
 									<tr>
@@ -228,41 +225,42 @@ if (isset($_GET["delete"])) {
 								</thead>
 								<tbody>
 									<?php
-									$categories = CategoryController::getAllCategories($db);
-									foreach ($categories as $category) :
-									?>
-									<tr>
-										<td><?= $category->getCateId()?></td>
-										<td><?= $category->getCateName()?></td>
-										<td><?= $category->getCateSlug()?></td>
+									foreach ($categories as $category):
+										?>
+										<tr>
+											<td><?= $category->getCateId() ?></td>
+											<td><?= $category->getCateName() ?></td>
+											<td><?= $category->getCateSlug() ?></td>
 
-										<td>
-											<a href="create-category.php?id=<?= $category->getCateId()?>">
-												<svg class="filament-link-icon w-4 h-4 mr-1"
-													xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-													fill="currentColor" aria-hidden="true">
-													<path
-														d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-													</path>
-												</svg>
-											</a>
-											<a href="?delete=<?= $category->getCateId()?>" class="text-danger w-4 h-4 mr-1">
-												<svg wire:loading.remove.delay="" wire:target=""
-													class="filament-link-icon w-4 h-4 mr-1"
-													xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-													fill="currentColor" aria-hidden="true">
-													<path ath fill-rule="evenodd"
-														d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-														clip-rule="evenodd"></path>
-												</svg>
-											</a>
-										</td>
-									</tr>
-									<?php endforeach;?>
+											<td>
+												<a href="create-category.php?id=<?= $category->getCateId() ?>">
+													<svg class="filament-link-icon w-4 h-4 mr-1"
+														xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+														fill="currentColor" aria-hidden="true">
+														<path
+															d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+														</path>
+													</svg>
+												</a>
+												<a href="?delete=<?= $category->getCateId() ?>"
+													class="text-danger w-4 h-4 mr-1">
+													<svg wire:loading.remove.delay="" wire:target=""
+														class="filament-link-icon w-4 h-4 mr-1"
+														xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+														fill="currentColor" aria-hidden="true">
+														<path ath fill-rule="evenodd"
+															d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+															clip-rule="evenodd"></path>
+													</svg>
+												</a>
+											</td>
+										</tr>
+									<?php endforeach; ?>
 								</tbody>
 							</table>
+							<?php endif;?>
 						</div>
-						<div class="card-footer clearfix">
+						<!-- <div class="card-footer clearfix">
 							<ul class="pagination pagination m-0 float-right">
 								<li class="page-item"><a class="page-link" href="#">«</a></li>
 								<li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -270,7 +268,7 @@ if (isset($_GET["delete"])) {
 								<li class="page-item"><a class="page-link" href="#">3</a></li>
 								<li class="page-item"><a class="page-link" href="#">»</a></li>
 							</ul>
-						</div>
+						</div> -->
 					</div>
 				</div>
 				<!-- /.card -->

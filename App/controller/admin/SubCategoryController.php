@@ -54,20 +54,18 @@ class SubCategoryController
     {
 
         if (!self::hasError()) {
-            if (self::hasError() == false) {
-                $sql = 'INSERT INTO `subcategory`(`CateId`,`AdminId`, `SCateName`, `Slug`) VALUES (:CateId ,:id , :subCateName , :subCateSlug)';
-                $stmt = $db->prepare($sql);
-                $stmt->execute([
-                    ':CateId' => $CateId,
-                    ':subCateName' => $subCateName,
-                    ':subCateSlug' => $subCateSlug,
-                    ':id' => $_SESSION['admin']
-                ]);
-                $id = $db->lastInsertId();
-                return new self($id, $CateId, $subCateName, $subCateSlug);
-            } else {
-                return false;
-            }
+            $sql = 'INSERT INTO `subcategory`(`CateId`,`AdminId`, `SCateName`, `Slug`) VALUES (:CateId ,:id , :subCateName , :subCateSlug)';
+            $stmt = $db->prepare($sql);
+            $stmt->execute([
+                ':CateId' => $CateId,
+                ':subCateName' => $subCateName,
+                ':subCateSlug' => $subCateSlug,
+                ':id' => $_SESSION['admin']
+            ]);
+            $id = $db->lastInsertId();
+            return new self($id, $CateId, $subCateName, $subCateSlug);
+        } else {
+            return false;
         }
     }
 

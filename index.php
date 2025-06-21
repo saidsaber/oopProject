@@ -5,7 +5,7 @@ include("App/controller/UserController.php");
 include("App/Config.php");
 if (isset($_GET["logout"])) {
   UserController::logout();
-  header(header: "Location: index.php"); 
+  header(header: "Location: index.php");
 }
 ?>
 
@@ -83,6 +83,28 @@ if (isset($_GET["logout"])) {
                   <li class="nav__link nav__user-link"><a href="?logout">تسجيل الخروج</a></li>
                 </ul>
               </li>
+              <li class="nav__link">
+                <a class="d-flex align-items-center gap-2" href="favourites.php">
+                  المفضلة
+                  <div class="position-relative">
+                    <i class="fa-regular fa-heart"></i>
+                    <div class="nav__link-floating-icon">
+                      0
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav__link">
+                <a class="d-flex align-items-center gap-2" data-bs-toggle="offcanvas" data-bs-target="#nav__cart">
+                  عربة التسوق
+                  <div class="position-relative">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <div class="nav__link-floating-icon">
+                      0
+                    </div>
+                  </div>
+                </a>
+              </li>
               <?php
             } else {
               ?>
@@ -93,28 +115,7 @@ if (isset($_GET["logout"])) {
                 </a>
               </li>
             <?php } ?>
-            <li class="nav__link">
-              <a class="d-flex align-items-center gap-2" href="favourites.php">
-                المفضلة
-                <div class="position-relative">
-                  <i class="fa-regular fa-heart"></i>
-                  <div class="nav__link-floating-icon">
-                    0
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li class="nav__link">
-              <a class="d-flex align-items-center gap-2" data-bs-toggle="offcanvas" data-bs-target="#nav__cart">
-                عربة التسوق
-                <div class="position-relative">
-                  <i class="fa-solid fa-cart-shopping"></i>
-                  <div class="nav__link-floating-icon">
-                    0
-                  </div>
-                </div>
-              </a>
-            </li>
+
           </ul>
         </div>
         <div class="nav-mobile fixed-bottom d-block d-lg-none">

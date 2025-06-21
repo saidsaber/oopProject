@@ -13,7 +13,7 @@ if (isset($_GET["logout"])) {
 	header(header: "Location: dashboard.php");
 }
 if (isset($_GET["delete"])) {
-	SubCategoryController::deleteSubCategory($db , $_GET["delete"]);
+	SubCategoryController::deleteSubCategory($db, $_GET["delete"]);
 	header(header: "Location: subcategory.php");
 }
 
@@ -147,13 +147,6 @@ if (isset($_GET["delete"])) {
 						</li>
 
 						<li class="nav-item">
-							<a href="#" class="nav-link">
-								<!-- <i class="nav-icon fas fa-tag"></i> -->
-								<i class="fas fa-truck nav-icon"></i>
-								<p>Shipping</p>
-							</a>
-						</li>
-						<li class="nav-item">
 							<a href="orders.php" class="nav-link">
 								<i class="nav-icon fas fa-shopping-bag"></i>
 								<p>Orders</p>
@@ -219,6 +212,10 @@ if (isset($_GET["delete"])) {
 							</div>
 						</div>
 						<div class="card-body table-responsive p-0">
+							<?php
+							$subcategories = SubCategoryController::getAllSubCategory($db);
+							if($subcategories):
+							?>
 							<table class="table table-hover text-nowrap">
 								<thead>
 
@@ -232,16 +229,15 @@ if (isset($_GET["delete"])) {
 								</thead>
 								<tbody>
 									<?php
-									$subcategories = SubCategoryController::getAllSubCategory($db);
 									foreach ($subcategories as $subcategory):
 										?>
 										<tr>
-											<td><?= $subcategory->getSubCateId()?></td>
-											<td><?= $subcategory->getSubCateName()?></td>
-											<td><?= $subcategory->getSubCateSlug()?></td>
-											<td><?= $subcategory->getCateName($db )?></td>
+											<td><?= $subcategory->getSubCateId() ?></td>
+											<td><?= $subcategory->getSubCateName() ?></td>
+											<td><?= $subcategory->getSubCateSlug() ?></td>
+											<td><?= $subcategory->getCateName($db) ?></td>
 											<td>
-												<a href="create-subcategory.php?id=<?= $subcategory->getSubCateId()?>">
+												<a href="create-subcategory.php?id=<?= $subcategory->getSubCateId() ?>">
 													<svg class="filament-link-icon w-4 h-4 mr-1"
 														xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
 														fill="currentColor" aria-hidden="true">
@@ -250,7 +246,8 @@ if (isset($_GET["delete"])) {
 														</path>
 													</svg>
 												</a>
-												<a href="?delete=<?= $subcategory->getSubCateId()?>" class="text-danger w-4 h-4 mr-1">
+												<a href="?delete=<?= $subcategory->getSubCateId() ?>"
+													class="text-danger w-4 h-4 mr-1">
 													<svg wire:loading.remove.delay="" wire:target=""
 														class="filament-link-icon w-4 h-4 mr-1"
 														xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -265,6 +262,7 @@ if (isset($_GET["delete"])) {
 									<?php endforeach; ?>
 								</tbody>
 							</table>
+							<?php endif;?>
 						</div>
 						<!-- < 	 -->
 					</div>

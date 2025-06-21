@@ -2,6 +2,10 @@
 session_start();
 
 use App\Controller\Admin\AdminController;
+use App\Controller\Admin\ProductController;
+use App\Controller\Admin\CategoryController;
+use App\Controller\Admin\SubCategoryController;
+use App\Controller\Admin\BrandController;
 include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/controller/admin/AdminController.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/book_store/App/Config.php");
 
@@ -146,13 +150,6 @@ if (isset($_GET["logout"])) {
 						</li>
 
 						<li class="nav-item">
-							<a href="#" class="nav-link">
-								<!-- <i class="nav-icon fas fa-tag"></i> -->
-								<i class="fas fa-truck nav-icon"></i>
-								<p>Shipping</p>
-							</a>
-						</li>
-						<li class="nav-item">
 							<a href="orders.php" class="nav-link">
 								<i class="nav-icon fas fa-shopping-bag"></i>
 								<p>Orders</p>
@@ -201,166 +198,321 @@ if (isset($_GET["logout"])) {
 			<!-- Main content -->
 			<section class="content">
 				<!-- Default box -->
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-8">
-							<div class="card mb-3">
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-12">
-											<div class="mb-3">
-												<label for="title">Title</label>
-												<input type="text" name="title" id="title" class="form-control"
-													placeholder="Title">
-											</div>
-										</div>
-										<div class="col-md-12">
-											<div class="mb-3">
-												<label for="description">Description</label>
-												<textarea name="description" id="description" cols="30" rows="10"
-													class="summernote" placeholder="Description"></textarea>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="card mb-3">
-								<div class="card-body">
-									<h2 class="h4 mb-3">Media</h2>
-									<div id="image" class="dropzone dz-clickable">
-										<div class="dz-message needsclick">
-											<br>Drop files here or click to upload.<br><br>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="card mb-3">
-								<div class="card-body">
-									<h2 class="h4 mb-3">Pricing</h2>
-									<div class="row">
-										<div class="col-md-12">
-											<div class="mb-3">
-												<label for="price">Price</label>
-												<input type="text" name="price" id="price" class="form-control"
-													placeholder="Price">
-											</div>
-										</div>
-										<div class="col-md-12">
-											<div class="mb-3">
-												<label for="compare_price">Compare at Price</label>
-												<input type="text" name="compare_price" id="compare_price"
-													class="form-control" placeholder="Compare Price">
-												<p class="text-muted mt-3">
-													To show a reduced price, move the product’s original price into
-													Compare at price. Enter a lower value into Price.
-												</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="card mb-3">
-								<div class="card-body">
-									<h2 class="h4 mb-3">Inventory</h2>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="mb-3">
-												<label for="sku">SKU (Stock Keeping Unit)</label>
-												<input type="text" name="sku" id="sku" class="form-control"
-													placeholder="sku">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="mb-3">
-												<label for="barcode">Barcode</label>
-												<input type="text" name="barcode" id="barcode" class="form-control"
-													placeholder="Barcode">
-											</div>
-										</div>
-										<div class="col-md-12">
-											<div class="mb-3">
-												<div class="custom-control custom-checkbox">
-													<input class="custom-control-input" type="checkbox" id="track_qty"
-														name="track_qty" checked>
-													<label for="track_qty" class="custom-control-label">Track
-														Quantity</label>
+				<?php
+				if (isset($_GET["id"])):
+					$product = ProductController::getProduct($db, $_GET["id"]);
+					?>
+					<form action="../App/header/admin/product/updateProduct.php" method="post" enctype="multipart/form-data"
+						class="p-4 border rounded bg-light shadow-sm">
+						<input type="hidden" name="id"  value="<?= $product->getId()?>">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-8">
+									<div class="card mb-3">
+										<div class="card-body">
+											<div class="row">
+												<div class="col-md-12">
+													<div class="mb-3">
+														<label for="title">Title</label>
+														<input type="text" name="title" id="title" class="form-control"
+															value="<?= $product->getTitle() ?>" placeholder="Title">
+													</div>
+												</div>
+												<div class="col-md-12">
+													<div class="mb-3">
+														<label for="description">Description</label>
+														<textarea name="description" id="description" cols="30" rows="10"
+															class="summernote"
+															placeholder="Description"><?= $product->getDescription() ?></textarea>
+													</div>
 												</div>
 											</div>
+										</div>
+									</div>
+									<div class="card mb-3">
+										<div class="card-body">
+											<h2 class="h4 mb-3">Media</h2>
+											<input type="file" name="image" id="image" style="display:none">
+											<label for="image">
+												<div id="" class="dropzone dz-clickable">
+													<div class="dz-message needsclick">
+														<br>Drop files here or click to upload.<br><br>
+													</div>
+												</div>
+											</label>
+										</div>
+									</div>
+									<div class="card mb-3">
+										<div class="card-body">
+											<h2 class="h4 mb-3">Pricing</h2>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="mb-3">
+														<label for="price">Price</label>
+														<input type="text" name="price" id="price" class="form-control"
+															value="<?= $product->getPrice() ?>" placeholder="Price">
+													</div>
+												</div>
+												<div class="col-md-12">
+													<div class="mb-3">
+														<label for="compare_price">Compare at Price</label>
+														<input type="text" name="compare_price" id="compare_price"
+															class="form-control"
+															value="<?= $product->getPriceAfterDiscount() ?>"
+															placeholder="Compare Price">
+														<p class="text-muted mt-3">
+															To show a reduced price, move the product’s original price into
+															Compare at price. Enter a lower value into Price.
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="card mb-3">
+										<div class="card-body">
+											<div class="row">
+												<div class="col-md-12">
+													<div class="mb-3">
+														<input type="number" min="0" name="qty" id="qty"
+															class="form-control" value="<?= $product->getQty() ?>"
+															placeholder="Qty">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="card mb-3">
+										<div class="card-body">
+											<h2 class="h4 mb-3">Product status</h2>
 											<div class="mb-3">
-												<input type="number" min="0" name="qty" id="qty" class="form-control"
-													placeholder="Qty">
+												<select name="status" id="status" class="form-control">
+													<option value="1">Active</option>
+													<option value="0">Block</option>
+												</select>
+											</div>
+										</div>
+										<div class="card-body">
+											<h2 class="h4 mb-3">Product lang</h2>
+											<div class="mb-3">
+												<select name="lang" id="lang" class="form-control">
+													<option value="ar">ar</option>
+													<option value="en">en</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="card">
+										<div class="card-body">
+											<h2 class="h4  mb-3">Product category</h2>
+											<div class="mb-3">
+												<label for="category">Category</label>
+												<select name="category" id="category" class="form-control">
+													<?php
+													$categories = CategoryController::getAllCategories($db);
+													if ($categories):
+														foreach ($categories as $category):
+															?>
+															<option value="<?= $category->getCateId() ?>">
+																<?= $category->getCateName() ?>
+															</option>
+															<?php
+														endforeach;
+													endif;
+													?>
+												</select>
+											</div>
+											<div class="mb-3">
+												<label for="sub_category">Sub category</label>
+												<select name="sub_category" id="sub_category" class="form-control">
+													<?php
+													$subcategories = SubCategoryController::getAllSubCategory($db);
+													if ($subcategories):
+														foreach ($subcategories as $subcategory):
+															?>
+															<option value="<?= $subcategory->getSubCateId() ?>">
+																<?= $subcategory->getSubCateName() ?>
+															</option>
+															<?php
+														endforeach;
+													endif;
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="card mb-3">
+										<div class="card-body">
+											<h2 class="h4 mb-3">Product brand</h2>
+											<div class="mb-3">
+												<select name="brand" id="brand" class="form-control">
+													<?php
+													$brands = BrandController::getBrands($db);
+													if ($brands):
+														foreach ($brands as $brand):
+															?>
+															<option value="<?= $brand->getBrandId()?>"><?= $brand->getBrandName()?></option>
+															<?php
+														endforeach;
+													endif;
+													?>
+												</select>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card mb-3">
-								<div class="card-body">
-									<h2 class="h4 mb-3">Product status</h2>
-									<div class="mb-3">
-										<select name="status" id="status" class="form-control">
-											<option value="1">Active</option>
-											<option value="0">Block</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="card">
-								<div class="card-body">
-									<h2 class="h4  mb-3">Product category</h2>
-									<div class="mb-3">
-										<label for="category">Category</label>
-										<select name="category" id="category" class="form-control">
-											<option value="">Electronics</option>
-											<option value="">Clothes</option>
-											<option value="">Furniture</option>
-										</select>
-									</div>
-									<div class="mb-3">
-										<label for="category">Sub category</label>
-										<select name="sub_category" id="sub_category" class="form-control">
-											<option value="">Mobile</option>
-											<option value="">Home Theater</option>
-											<option value="">Headphones</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="card mb-3">
-								<div class="card-body">
-									<h2 class="h4 mb-3">Product brand</h2>
-									<div class="mb-3">
-										<select name="status" id="status" class="form-control">
-											<option value="">Apple</option>
-											<option value="">Vivo</option>
-											<option value="">HP</option>
-											<option value="">Samsung</option>
-											<option value="">DELL</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="card mb-3">
-								<div class="card-body">
-									<h2 class="h4 mb-3">Featured product</h2>
-									<div class="mb-3">
-										<select name="status" id="status" class="form-control">
-											<option value="0">No</option>
-											<option value="1">Yes</option>
-										</select>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 
-					<div class="pb-5 pt-3">
-						<button class="btn btn-primary">Create</button>
-						<a href="products.php" class="btn btn-outline-dark ml-3">Cancel</a>
-					</div>
-				</div>
+							<div class="pb-5 pt-3">
+								<input type="submit" class="btn btn-primary" value="Create">
+								<a href="products.php" class="btn btn-outline-dark ml-3">Cancel</a>
+							</div>
+						</div>
+					</form>
+				<?php else: ?>
+					<form action="../App/header/admin/product/createProduct.php" method="post" enctype="multipart/form-data"
+						class="p-4 border rounded bg-light shadow-sm">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-8">
+									<div class="card mb-3">
+										<div class="card-body">
+											<div class="row">
+												<div class="col-md-12">
+													<div class="mb-3">
+														<label for="title">Title</label>
+														<input type="text" name="title" id="title" class="form-control"
+															placeholder="Title">
+													</div>
+												</div>
+												<div class="col-md-12">
+													<div class="mb-3">
+														<label for="description">Description</label>
+														<textarea name="description" id="description" cols="30" rows="10"
+															class="summernote" placeholder="Description"></textarea>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="card mb-3">
+										<div class="card-body">
+											<h2 class="h4 mb-3">Media</h2>
+											<input type="file" name="image" id="image" style="display:none">
+											<label for="image">
+												<div id="" class="dropzone dz-clickable">
+													<div class="dz-message needsclick">
+														<br>Drop files here or click to upload.<br><br>
+													</div>
+												</div>
+											</label>
+										</div>
+									</div>
+									<div class="card mb-3">
+										<div class="card-body">
+											<h2 class="h4 mb-3">Pricing</h2>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="mb-3">
+														<label for="price">Price</label>
+														<input type="text" name="price" id="price" class="form-control"
+															placeholder="Price">
+													</div>
+												</div>
+												<div class="col-md-12">
+													<div class="mb-3">
+														<label for="compare_price">Compare at Price</label>
+														<input type="text" name="compare_price" id="compare_price"
+															class="form-control" placeholder="Compare Price">
+														<p class="text-muted mt-3">
+															To show a reduced price, move the product’s original price into
+															Compare at price. Enter a lower value into Price.
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="card mb-3">
+										<div class="card-body">
+											<div class="row">
+												<div class="col-md-12">
+													<div class="mb-3">
+														<input type="number" min="0" name="qty" id="qty"
+															class="form-control" placeholder="Qty">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="card mb-3">
+										<div class="card-body">
+											<h2 class="h4 mb-3">Product status</h2>
+											<div class="mb-3">
+												<select name="status" id="status" class="form-control">
+													<option value="1">Active</option>
+													<option value="0">Block</option>
+												</select>
+											</div>
+										</div>
+										<div class="card-body">
+											<h2 class="h4 mb-3">Product lang</h2>
+											<div class="mb-3">
+												<select name="lang" id="lang" class="form-control">
+													<option value="ar">ar</option>
+													<option value="en">en</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="card">
+										<div class="card-body">
+											<h2 class="h4  mb-3">Product category</h2>
+											<div class="mb-3">
+												<label for="category">Category</label>
+												<select name="category" id="category" class="form-control">
+													<option value="7">Electronics</option>
+													<option value="8">Clothes</option>
+												</select>
+											</div>
+											<div class="mb-3">
+												<label for="sub_category">Sub category</label>
+												<select name="sub_category" id="sub_category" class="form-control">
+													<option value="11">Mobile</option>
+													<option value="12">Home Theater</option>
+													<option value="13">Headphones</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="card mb-3">
+										<div class="card-body">
+											<h2 class="h4 mb-3">Product brand</h2>
+											<div class="mb-3">
+												<select name="brand" id="brand" class="form-control">
+													<option value="5">Apple</option>
+													<option value="5">Vivo</option>
+													<option value="5">HP</option>
+													<option value="5">Samsung</option>
+													<option value="5">DELL</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="pb-5 pt-3">
+								<input type="submit" class="btn btn-primary" value="Create">
+								<a href="products.php" class="btn btn-outline-dark ml-3">Cancel</a>
+							</div>
+						</div>
+					</form>
+				<?php endif; ?>
 				<!-- /.card -->
 			</section>
 			<!-- /.content -->

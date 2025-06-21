@@ -146,13 +146,6 @@ if (isset($_GET["delete"])) {
 						</li>
 
 						<li class="nav-item">
-							<a href="#" class="nav-link">
-								<!-- <i class="nav-icon fas fa-tag"></i> -->
-								<i class="fas fa-truck nav-icon"></i>
-								<p>Shipping</p>
-							</a>
-						</li>
-						<li class="nav-item">
 							<a href="orders.php" class="nav-link">
 								<i class="nav-icon fas fa-shopping-bag"></i>
 								<p>Orders</p>
@@ -218,6 +211,10 @@ if (isset($_GET["delete"])) {
 							</div>
 						</div>
 						<div class="card-body table-responsive p-0">
+							<?php
+							$pages = PagesController::getPages($db);
+							if($pages):
+							?>
 							<table class="table table-hover text-nowrap">
 								<thead>
 									<tr>
@@ -261,6 +258,7 @@ if (isset($_GET["delete"])) {
 									<?php endforeach; ?>
 								</tbody>
 							</table>
+							<?php endif;?>
 						</div>
 						<!-- <div class="card-footer clearfix">
 							<ul class="pagination pagination m-0 float-right">

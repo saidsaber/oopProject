@@ -1,3 +1,13 @@
+<?php
+
+use App\Controller\UserController;
+include("App/controller/UserController.php");
+include("App/Config.php");
+if (isset($_GET["logout"])) {
+  UserController::logout();
+  header(header: "Location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,44 +63,57 @@
             </span>
           </div>
           <ul class="nav__links gap-3 list-unstyled d-none d-lg-flex m-0">
-            <!-- <li class="nav__link nav__link-user">
-              <a class="d-flex align-items-center gap-2">
-                حسابي
-                <i class="fa-regular fa-user"></i>
-                <i class="fa-solid fa-chevron-down fa-2xs"></i>
-              </a>
-              <ul class="nav__user-list position-absolute p-0 list-unstyled bg-white">
-                <li class="nav__link nav__user-link"><a href="profile.php">لوحة التحكم</a></li>
-                <li class="nav__link nav__user-link"><a href="orders.php">الطلبات</a></li>
-                <li class="nav__link nav__user-link"><a href="account_details.php">تفاصيل الحساب</a></li>
-                <li class="nav__link nav__user-link"><a href="favourites.php">المفضلة</a></li>
-                <li class="nav__link nav__user-link"><a href="">تسجيل الخروج</a></li>
-              </ul>
-            </li> -->
-            <li class="nav__link">
-              <a class="d-flex align-items-center gap-2" href="account.php">
-                تسجيل الدخول
-                <i class="fa-regular fa-user"></i>
-              </a>
-            </li>
-            <li class="nav__link">
-              <a class="d-flex align-items-center gap-2" href="favourites.php">
-                المفضلة
-                <div class="position-relative">
-                  <i class="fa-regular fa-heart"></i>
-                  <div class="nav__link-floating-icon">0</div>
-                </div>
-              </a>
-            </li>
-            <li class="nav__link">
-              <a class="d-flex align-items-center gap-2" data-bs-toggle="offcanvas" data-bs-target="#nav__cart">
-                عربة التسوق
-                <div class="position-relative">
-                  <i class="fa-solid fa-cart-shopping"></i>
-                  <div class="nav__link-floating-icon">0</div>
-                </div>
-              </a>
-            </li>
+            <?php
+            $user = UserController::isLogIn($db);
+            if ($user) {
+              ?>
+              <li class="nav__link nav__link-user">
+                <a class="d-flex align-items-center gap-2">
+                  حسابي
+                  <i class="fa-regular fa-user"></i>
+                  <i class="fa-solid fa-chevron-down fa-2xs"></i>
+                </a>
+                <ul class="nav__user-list position-absolute p-0 list-unstyled bg-white">
+                  <li class="nav__link nav__user-link"><a href="profile.php">لوحة التحكم</a></li>
+                  <li class="nav__link nav__user-link"><a href="orders.php">الطلبات</a></li>
+                  <li class="nav__link nav__user-link"><a href="account_details.php">تفاصيل الحساب</a></li>
+                  <li class="nav__link nav__user-link"><a href="favourites.php">المفضلة</a></li>
+                  <li class="nav__link nav__user-link"><a href="?logout">تسجيل الخروج</a></li>
+                </ul>
+              </li>
+              <li class="nav__link">
+                <a class="d-flex align-items-center gap-2" href="favourites.php">
+                  المفضلة
+                  <div class="position-relative">
+                    <i class="fa-regular fa-heart"></i>
+                    <div class="nav__link-floating-icon">
+                      0
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav__link">
+                <a class="d-flex align-items-center gap-2" data-bs-toggle="offcanvas" data-bs-target="#nav__cart">
+                  عربة التسوق
+                  <div class="position-relative">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <div class="nav__link-floating-icon">
+                      0
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <?php
+            } else {
+              ?>
+              <li class="nav__link">
+                <a class="d-flex align-items-center gap-2" href="account.php">
+                  تسجيل الدخول
+                  <i class="fa-regular fa-user"></i>
+                </a>
+              </li>
+            <?php } ?>
+
           </ul>
         </div>
         <div class="nav-mobile fixed-bottom d-block d-lg-none">
@@ -234,15 +257,15 @@
         <div class="account__login w-100">
           <form class="mb-5" method="post" action="App/header/user/login.php">
             <div class="input-group rounded-1 mb-3">
-              <input type="text" name="loginemail" class="form-control p-3" placeholder="البريد الالكتروني" aria-label="Email"
-                aria-describedby="basic-addon1" />
+              <input type="text" name="loginemail" class="form-control p-3" placeholder="البريد الالكتروني"
+                aria-label="Email" aria-describedby="basic-addon1" />
               <span class="input-group-text login__input-icon" id="basic-addon1">
                 <i class="fa-solid fa-envelope"></i>
               </span>
             </div>
             <div class="input-group rounded-1 mb-3">
-              <input type="password" name="password" class="form-control p-3" placeholder="كلمة السر" aria-label="Password"
-                aria-describedby="basic-addon1" />
+              <input type="password" name="password" class="form-control p-3" placeholder="كلمة السر"
+                aria-label="Password" aria-describedby="basic-addon1" />
               <span class="input-group-text login__input-icon" id="basic-addon1">
                 <i class="fa-solid fa-key"></i>
               </span>

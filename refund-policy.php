@@ -1,3 +1,13 @@
+<?php
+
+use App\Controller\UserController;
+include("App/controller/UserController.php");
+include("App/Config.php");
+if (isset($_GET["logout"])) {
+  UserController::logout();
+  header(header: "Location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -52,7 +62,11 @@
               </span>
             </div>
             <ul class="nav__links gap-3 list-unstyled d-none d-lg-flex m-0">
-              <!-- <li class="nav__link nav__link-user">
+            <?php
+            $user = UserController::isLogIn($db);
+            if ($user) {
+              ?>
+              <li class="nav__link nav__link-user">
                 <a class="d-flex align-items-center gap-2">
                   حسابي
                   <i class="fa-regular fa-user"></i>
@@ -63,14 +77,8 @@
                   <li class="nav__link nav__user-link"><a href="orders.php">الطلبات</a></li>
                   <li class="nav__link nav__user-link"><a href="account_details.php">تفاصيل الحساب</a></li>
                   <li class="nav__link nav__user-link"><a href="favourites.php">المفضلة</a></li>
-                  <li class="nav__link nav__user-link"><a href="">تسجيل الخروج</a></li>
+                  <li class="nav__link nav__user-link"><a href="?logout">تسجيل الخروج</a></li>
                 </ul>
-              </li> -->
-              <li class="nav__link">
-                <a class="d-flex align-items-center gap-2" href="account.php">
-                  تسجيل الدخول
-                  <i class="fa-regular fa-user"></i>
-                </a>
               </li>
               <li class="nav__link">
                 <a class="d-flex align-items-center gap-2" href="favourites.php">
@@ -94,7 +102,18 @@
                   </div>
                 </a>
               </li>
-            </ul>
+              <?php
+            } else {
+              ?>
+              <li class="nav__link">
+                <a class="d-flex align-items-center gap-2" href="account.php">
+                  تسجيل الدخول
+                  <i class="fa-regular fa-user"></i>
+                </a>
+              </li>
+            <?php } ?>
+
+          </ul>
           </div>
           <div class="nav-mobile fixed-bottom d-block d-lg-none">
             <ul class="nav-mobile__list d-flex justify-content-around gap-2 list-unstyled  m-0 border-top">
